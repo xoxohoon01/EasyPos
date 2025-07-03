@@ -1,5 +1,6 @@
 package controller;
 
+import app.MessageBox;
 import io.InputProvider;
 import io.OutputRenderer;
 import view.MainMenuView;
@@ -33,11 +34,18 @@ public class MainMenuController implements Controller
                     // controller = RegisterProductController
                     break;
                 default:
-                    output.println("잘못된 입력입니다. 다시 입력해주세요.");
-                    break;
+                    MessageBox.showWarningByWrongInput(input, output);
+                    continue;
             }
 
-            controller.run(); // 선택한 새로운 컨트롤러 실행
+            try
+            {
+                controller.run(); // 선택한 새로운 컨트롤러 실행
+            }
+            catch (NullPointerException e)
+            {
+                MessageBox.showWarningByWrongInput(input, output);
+            }
         }
     }
 }

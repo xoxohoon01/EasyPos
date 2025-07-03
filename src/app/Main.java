@@ -1,5 +1,7 @@
 package app;
 
+import controller.Controller;
+import controller.MainMenuController;
 import io.ConsoleInputProvider;
 import io.ConsoleOutputRenderer;
 import io.InputProvider;
@@ -12,5 +14,7 @@ public class Main
         InputProvider input = new ConsoleInputProvider();
         OutputRenderer output = new ConsoleOutputRenderer();
 
+        Controller controller = new MainMenuController(input, output);
+        controller.run();
     }
 }
