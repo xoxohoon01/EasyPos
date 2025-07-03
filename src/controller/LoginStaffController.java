@@ -64,7 +64,8 @@ public class LoginStaffController implements Controller
                 continue;
             }
 
-            // 메인메뉴로
+            // 스태프 ID와 패스워드를 모두 올바르게 입력했을 경우에만 실행됨
+            // Work 테이블 만들 것. //
             view.showLoginSuccess();
             MessageBox.showEnterToContinue(input, output);
             Controller controller = new MainMenuController(input, output);
