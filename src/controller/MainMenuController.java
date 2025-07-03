@@ -31,7 +31,7 @@ public class MainMenuController implements Controller
             {
                 case "1":
                     // 제품입력 컨트롤러
-                    // controller = RegisterProductController
+                    //controller = new RegisterStockController(input, output);
                     break;
                 default:
                     MessageBox.showWarningByWrongInput(input, output);
