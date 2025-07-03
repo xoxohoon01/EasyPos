@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ojdbc11">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/대전대학교_빅데이터_기반_IoT_클라우드_응용_SW_개발자/ojdbc11.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
