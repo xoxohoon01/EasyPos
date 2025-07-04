@@ -15,16 +15,26 @@ public class PaymentView implements View
     }
 
     @Override
-    public void display()
+    public void displayBanner()
     {
         output.println("===========================");
         output.println("      [EASY POS 결제]      ");
         output.println("---------------------------");
+    }
+
+    @Override
+    public void displayMenu()
+    {
         output.println("1. 상품 등록");
         output.println("2. 수량 변경");
         output.println("3. 상품 취소");
         output.println("4. 결제");
         output.println("5. 결제 취소");
+    }
+
+    @Override
+    public void displayLast()
+    {
         output.println("===========================");
         output.print("메뉴를 선택하세요: ");
     }

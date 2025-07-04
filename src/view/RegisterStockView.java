@@ -15,14 +15,24 @@ public class RegisterStockView implements View
     }
 
     @Override
-    public void display()
+    public void displayBanner()
     {
         output.println("===========================");
         output.println("    [EASY POS 상품 등록]     ");
         output.println("---------------------------");
+    }
+
+    @Override
+    public void displayMenu()
+    {
         output.println("1. 상품 입력");
         output.println("2. 입력 결정");
         output.println("3. 취소");
+    }
+
+    @Override
+    public void displayLast()
+    {
         output.println("===========================");
         output.print("메뉴를 선택하세요: ");
     }

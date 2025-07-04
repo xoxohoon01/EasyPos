@@ -16,11 +16,23 @@ public class LoginStaffView implements View
 
 
     @Override
-    public void display()
+    public void displayBanner()
     {
         output.println("===========================");
         output.println("      [EASY POS 로그인]     ");
         output.println("---------------------------");
+    }
+
+    @Override
+    public void displayMenu()
+    {
+
+    }
+
+    @Override
+    public void displayLast()
+    {
+
     }
 
     public void promptStaffId()

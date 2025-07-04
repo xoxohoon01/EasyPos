@@ -14,11 +14,23 @@ public class LoginStoreView implements View
     }
 
     @Override
-    public void display()
+    public void displayBanner()
     {
         output.println("===========================");
         output.println("      [EASY POS 로그인]     ");
         output.println("---------------------------");
+
+    }
+
+    @Override
+    public void displayMenu()
+    {
+
+    }
+
+    @Override
+    public void displayLast()
+    {
         output.println("점포 ID를 입력하세요. (0 입력 시 종료)");
         output.print("ID: ");
     }

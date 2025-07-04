@@ -36,6 +36,9 @@ public class MainMenuController implements Controller
                     break;
                 case "2":
                     break;
+                case "3":
+                    controller = new OrderController(input, output);
+                    break;
                 case "6":
                     view.showLeave();
                     String answer = input.readLine();
