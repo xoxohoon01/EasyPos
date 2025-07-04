@@ -24,7 +24,9 @@ public class MainMenuController implements Controller
     {
         while (true)
         {
-            view.display();
+            view.displayBanner();
+            view.displayMenu();
+            view.displayLast();
 
             Controller controller = null;
             String choice = input.readLine();
