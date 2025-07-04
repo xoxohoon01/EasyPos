@@ -3,6 +3,7 @@ package controller;
 import app.MessageBox;
 import io.InputProvider;
 import io.OutputRenderer;
+import model.StaffRepository;
 import view.MainMenuView;
 
 public class MainMenuController implements Controller
@@ -40,15 +41,19 @@ public class MainMenuController implements Controller
                     String answer = input.readLine();
                     if (answer.equals("Y"))
                     {
+                        StaffRepository staffRepository = new StaffRepository();
+                        staffRepository.logout();
                         controller = new LoginStaffController(input, output);
                     }
                     else if (answer.equals("N"))
                     {
+                        controller = new MainMenuController(input, output);
                         break;
                     }
                     else
                     {
                         MessageBox.showWarningByWrongInputGotoMainMenu(input, output);
+                        controller = new MainMenuController(input, output);
                     }
             }
 

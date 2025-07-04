@@ -11,6 +11,6 @@ public class Staff
         this.name = name;
     }
 
-    public int getStaffID() { return staff_id; }
-    public String getStaffName() { return name; }
+    public int getStaff_id() { return staff_id; }
+    public String getStaff_name() { return name; }
 }

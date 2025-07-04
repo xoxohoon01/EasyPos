@@ -36,7 +36,7 @@ public class LoginStaffView implements View
     public void showLoginSuccess()
     {
         output.println("로그인에 성공했습니다.");
-        output.printf("%s님 환영합니다.\n", Main.staff.getStaffName());
+        output.printf("%s님 환영합니다.\n", Main.staff.getStaff_name());
         output.println("===========================\n");
     }
 

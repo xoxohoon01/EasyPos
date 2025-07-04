@@ -33,6 +33,7 @@ public class MainMenuView implements View
     public void showLeave()
     {
         output.printf("현재 시간: %s\n", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        output.println("종료하시겠습니까?");
+        output.println("종료하시겠습니까? (Y, N)");
+        output.print("입력: ");
     }
 }

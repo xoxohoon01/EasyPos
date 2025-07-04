@@ -1,9 +1,10 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import app.Main;
+
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class StaffRepository
 {
@@ -42,7 +43,26 @@ public class StaffRepository
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next())
             {
-                return new Staff(rs.getInt("staff_id"), rs.getString("staff_name"));
+                String sqlUpdateWorksTable = """
+                        INSERT INTO works(store_id, staff_id, log_date, cause) VALUES(?, ?, ?, ?)
+                        """;
+                try
+                {
+                    PreparedStatement worksTable = conn.prepareStatement(sqlUpdateWorksTable);
+
+                    worksTable.setInt(1, Main.store.getStore_id());
+                    worksTable.setInt(2, rs.getInt("staff_id"));
+                    worksTable.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
+                    worksTable.setString(4, "Enter");
+
+                    worksTable.execute();
+                    return new Staff(rs.getInt("staff_id"), rs.getString("staff_name"));
+                }
+                catch (SQLException e)
+                {
+                    e.printStackTrace();
+                }
+                return null;
             }
             else
             {
@@ -54,5 +74,28 @@ public class StaffRepository
             e.printStackTrace();
         }
         return null; // 로그인 실패
+    }
+
+    public void logout()
+    {
+        String sqlUpdateWorksTable = """
+                        INSERT INTO works(store_id, staff_id, log_date, cause) VALUES(?, ?, ?, ?)
+                        """;
+        try
+        {
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement worksTable = conn.prepareStatement(sqlUpdateWorksTable);
+
+            worksTable.setInt(1, Main.store.getStore_id());
+            worksTable.setInt(2, Main.staff.getStaff_id());
+            worksTable.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
+            worksTable.setString(4, "Leave");
+
+            worksTable.execute();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
     }
 }
