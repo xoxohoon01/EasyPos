@@ -31,7 +31,7 @@ public class LoginStaffController implements Controller
         {
             try
             {
-                view.display();
+                view.displayBanner();
 
                 view.promptStaffId();
                 int staffID = Integer.parseInt(input.readLine());
