@@ -29,8 +29,8 @@ public class LoginStoreController implements Controller
     {
         while (true)
         {
-            view.display();
-
+            view.displayBanner();
+            
             try
             {
                 view.promptStoreID();
