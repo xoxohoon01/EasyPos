@@ -30,7 +30,7 @@ public class LoginStoreController implements Controller
         while (true)
         {
             view.displayBanner();
-            
+
             try
             {
                 view.promptStoreID();
