@@ -1,8 +1,14 @@
 package controller;
 
+import app.MessageBox;
 import io.InputProvider;
 import io.OutputRenderer;
+import model.ProductRepository;
+import model.Sale;
+import model.SaleRepository;
 import view.TradeLogView;
+
+import java.util.List;
 
 public class TradeLogController implements Controller
 {
@@ -23,6 +29,50 @@ public class TradeLogController implements Controller
         view.displayBanner();
         view.displayMenu();
         view.displayLast();
+
+        ProductRepository productRepository = new ProductRepository();
+        SaleRepository saleRepository = new SaleRepository();
+
+        Controller controller = null;
+        String choice = input.readLine();
+
+        switch (choice)
+        {
+            case "1": // 오늘 매출 확인
+                view.promptTodaySaleList();
+                List<Sale> todaySaleList = saleRepository.getTodaySaleList();
+                if (!todaySaleList.isEmpty())
+                {
+                    for (int i = 0; i < todaySaleList.size(); i++)
+                    {
+                        view.showSaleInfo(productRepository.getProductByID(todaySaleList.get(i).getProduct_id()), todaySaleList.get(i));
+                    }
+                    MessageBox.showEnterToContinue(input, output);
+                }
+                else
+                {
+                    view.promptNoSale();
+                    MessageBox.showEnterToContinue(input, output);
+                }
+                break;
+            case "2": // 전체 매출 확인
+                view.promptSaleList();
+                List<Sale> saleList = saleRepository.getSaleList();
+                if (!saleList.isEmpty())
+                {
+                    for (int i = 0; i < saleList.size(); i++)
+                    {
+                        view.showSaleInfo(productRepository.getProductByID(saleList.get(i).getProduct_id()), saleList.get(i));
+                    }
+                    MessageBox.showEnterToContinue(input, output);
+                }
+                else
+                {
+                    view.promptNoSale();
+                    MessageBox.showEnterToContinue(input, output);
+                }
+                break;
+        }
     }
 
 
