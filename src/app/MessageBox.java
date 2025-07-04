@@ -18,4 +18,11 @@ public class MessageBox
         input.readLine();
         output.println("");
     }
+    public static void showWarningByWrongInputGotoMainMenu(InputProvider input, OutputRenderer output)
+    {
+        output.println("\n잘못된 입력입니다. 메인메뉴로 돌아갑니다.\n");
+        output.print("계속하려면 엔터를 누르세요...");
+        input.readLine();
+        output.println("");
+    }
 }

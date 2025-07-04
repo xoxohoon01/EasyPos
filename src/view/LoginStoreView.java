@@ -17,7 +17,7 @@ public class LoginStoreView implements View
     public void display()
     {
         output.println("===========================");
-        output.println("         [EASY POS]       ");
+        output.println("      [EASY POS 로그인]     ");
         output.println("---------------------------");
         output.println("점포 ID를 입력하세요. (0 입력 시 종료)");
         output.print("ID: ");

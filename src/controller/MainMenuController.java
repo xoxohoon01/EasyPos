@@ -33,9 +33,23 @@ public class MainMenuController implements Controller
                     // 제품입력 컨트롤러
                     //controller = new RegisterStockController(input, output);
                     break;
-                default:
-                    MessageBox.showWarningByWrongInput(input, output);
-                    continue;
+                case "2":
+                    break;
+                case "6":
+                    view.showLeave();
+                    String answer = input.readLine();
+                    if (answer.equals("Y"))
+                    {
+                        controller = new LoginStaffController(input, output);
+                    }
+                    else if (answer.equals("N"))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        MessageBox.showWarningByWrongInputGotoMainMenu(input, output);
+                    }
             }
 
             try
