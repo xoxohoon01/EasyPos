@@ -34,8 +34,8 @@ public class StoreRepository
         String sql = "SELECT store_id, store_name, password FROM stores WHERE store_id = ? AND password = ?";
         try
         {
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            Connection connection = DBConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setInt(1, store_id);
             preparedStatement.setString(2, password);

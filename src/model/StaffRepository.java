@@ -83,8 +83,8 @@ public class StaffRepository
                         """;
         try
         {
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement worksTable = conn.prepareStatement(sqlUpdateWorksTable);
+            Connection connection = DBConnection.getConnection();
+            PreparedStatement worksTable = connection.prepareStatement(sqlUpdateWorksTable);
 
             worksTable.setInt(1, Main.store.getStore_id());
             worksTable.setInt(2, Main.staff.getStaff_id());
