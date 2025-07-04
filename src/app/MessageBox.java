@@ -25,4 +25,11 @@ public class MessageBox
         input.readLine();
         output.println("");
     }
+    public static void showWarningByWrongNumber(InputProvider input, OutputRenderer output)
+    {
+        output.println("\n숫자를 입력해주세요.\n");
+        output.print("계속하려면 엔터를 누르세요...");
+        input.readLine();
+        output.println("");
+    }
 }

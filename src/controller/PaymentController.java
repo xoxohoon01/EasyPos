@@ -20,7 +20,9 @@ public class PaymentController implements Controller
     @Override
     public void run()
     {
-        view.display();
+        view.displayBanner();
+        view.displayMenu();
+        view.displayLast();
     }
 
 
