@@ -33,15 +33,27 @@ public class MainMenuController implements Controller
             switch (choice)
             {
                 case "1":
-                    // 제품입력 컨트롤러
-                    //controller = new RegisterStockController(input, output);
+                    // 제품 입력
+                    controller = new RegisterStockController(input, output);
                     break;
                 case "2":
+                    // 상품 조회
+                    controller = new CheckStockController(input, output);
                     break;
                 case "3":
+                    // 발주 등록
                     controller = new OrderController(input, output);
                     break;
+                case "4":
+                    // 계산
+                    controller = new PaymentController(input, output);
+                    break;
+                case "5":
+                    // 매출 확인
+                    controller = new TradeLogController(input, output);
+                    break;
                 case "6":
+                    // 로그아웃
                     view.showLeave();
                     String answer = input.readLine();
                     if (answer.equals("Y"))
