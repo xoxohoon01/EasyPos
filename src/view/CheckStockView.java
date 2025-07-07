@@ -56,16 +56,16 @@ public class CheckStockView implements View
         output.printf("분류: %s\n", targetProduct.getCategory());
         output.printf("제조사: %s\n", targetProduct.getCompany());
         output.printf("성인인증 여부: %s\n", targetProduct.getIsAdult());
+        output.println("===========================");
     }
 
     public void showStockInfo(Stock targetStock)
     {
-        output.println("---------------------------");
         output.printf("재고 ID: %d\n", targetStock.getStock_id());
         output.printf("재고 수량: %d\n", targetStock.getQuantity());
         output.printf("입고 날짜: %s\n", targetStock.getRegistered_date());
         output.printf("유통기한: %s\n", targetStock.getExpiration_date());
-        output.println("===========================");
+        output.println("---------------------------");
     }
 
     public void showStockInfoByList(Product targetProduct, Stock targetStock)

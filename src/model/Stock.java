@@ -7,7 +7,7 @@ public class Stock
     private final int stock_id;
     private final int store_id;
     private final int product_id;
-    private final int quantity;
+    private int quantity;
     private Timestamp registered_date;
     private Timestamp expiration_date;
 
@@ -27,4 +27,8 @@ public class Stock
     public int getQuantity() { return quantity; }
     public Timestamp getRegistered_date() { return registered_date; }
     public Timestamp getExpiration_date() { return expiration_date; }
+
+    public void addQuantity(int amount) { quantity += amount; }
+    public void removeQuantity(int amount) { quantity -= amount; }
+    public void setQuantity(int amount) { quantity = amount; }
 }
