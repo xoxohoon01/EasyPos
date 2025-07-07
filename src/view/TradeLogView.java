@@ -131,5 +131,19 @@ public class TradeLogView implements View
         System.out.printf("총 근무 시간: %.2f시간, 예상 급여: %,d원%n", hours, salary);
     }
 
+    public void promptSaleListByDate()
+    {
+        output.println("===========================");
+        output.println("날짜를 입력하세요");
+        output.println("yyyy-mm-dd");
+        output.println("---------------------------");
+        output.print("날짜: ");
+    }
+
+    public void showSaleTotal(int total)
+    {
+        output.println("---------------------------");
+        output.printf("총 매출: %d\n", total);
+    }
 
 }

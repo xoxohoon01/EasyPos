@@ -72,6 +72,33 @@ public class TradeLogController implements Controller
                     MessageBox.showEnterToContinue(input, output);
                 }
                 break;
+            case "4": // 날짜별 매출 정보 확인
+                view.promptSaleListByDate();
+                try
+                {
+                    String[] context = input.readLine().split("-");
+                    int year = Integer.parseInt(context[0]);
+                    int month = Integer.parseInt(context[1]);
+                    int day = Integer.parseInt(context[2]);
+                    List<Sale> targetSaleList = saleRepository.getSaleListByDate(year, month, day);
+
+                    int total = 0;
+                    for (Sale sale : targetSaleList)
+                    {
+                        total += productRepository.getProductByID(sale.getProduct_id()).getPrice() * sale.getQuantity();
+                        view.showSaleInfo(productRepository.getProductByID(sale.getProduct_id()), sale);
+                    }
+                    view.showSaleTotal(total);
+                    MessageBox.showEnterToContinue(input, output);
+                }
+                catch (NullPointerException e)
+                {
+                    MessageBox.showWarningByWrongInput(input, output);
+                }
+
+
+                break;
+
             case "3": // 직원 정보 확인
                 view.promptStaffInfo();
                 break;
