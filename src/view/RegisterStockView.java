@@ -37,12 +37,6 @@ public class RegisterStockView implements View
         output.print("메뉴를 선택하세요: ");
     }
 
-    public void showLeave()
-    {
-        output.printf("현재 시간: %s\n", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        output.println("종료하시겠습니까?");
-    }
-
     public void promptInputProduct()
     {
         output.println("상품 ID를 입력하세요.");
@@ -60,16 +54,8 @@ public class RegisterStockView implements View
         output.println("수량을 입력하세요.");
         output.print("수량: ");
     }
-
-    public void promptCheckout()
+    public void promptNotEnoughAmount()
     {
-        output.println("입력을 완료하시겠습니까? (Y, N)");
-        output.print("입력: ");
-    }
-
-    public void promptCancel()
-    {
-        output.println("등록을 취소하시겠습니까? (Y, N)");
-        output.print("입력: ");
+        output.println("최소 수량은 10개입니다.");
     }
 }

@@ -90,4 +90,9 @@ public class OrderView implements View
     {
         output.printf("%d: %s\n", targetProduct.getProduct_id(), targetProduct.getName());
     }
+
+    public void promptNotEnoughAmount()
+    {
+        output.println("최소 수량은 10개입니다.");
+    }
 }

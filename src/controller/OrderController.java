@@ -64,11 +64,30 @@ public class OrderController implements Controller
                         try
                         {
                             amount = Integer.parseInt(input.readLine());
-                        } catch (NumberFormatException e)
+                        }
+                        catch (NumberFormatException e)
                         {
                             MessageBox.showWarningByWrongNumber(input, output);
                             break;
                         }
+
+                        // 최소 주문 10개 이상
+                        boolean hasOrder = false;
+                        for (int i = 0; i < orderList.size(); i++)
+                        {
+                            if (orderList.get(i).getProduct_id() == newProduct.getProduct_id())
+                            {
+                                hasOrder = true;
+                                break;
+                            }
+                        }
+                        if (!hasOrder && amount < 10)
+                        {
+                            view.promptNotEnoughAmount();
+                            MessageBox.showEnterToContinue(input, output);
+                            break;
+                        }
+
                         boolean isRegisteredOrder = false; // 발주 예정품목 등록 여부
                         if (!orderList.isEmpty())
                         {

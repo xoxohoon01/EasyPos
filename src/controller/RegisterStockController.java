@@ -47,7 +47,14 @@ public class RegisterStockController implements Controller
                     view.promptInputProductAmount();
                     targetQuantity = Integer.parseInt(input.readLine());
 
-                    stockRepository.registerStockByProductId(targetProduct_id, targetQuantity);
+                    if (targetQuantity >= 10)
+                    {
+                        stockRepository.registerStockByProductId(targetProduct_id, targetQuantity);
+                    }
+                    else
+                    {
+                        view.promptNotEnoughAmount();
+                    }
                     break;
                 case "2":
                     view.promptInputDelivery();
