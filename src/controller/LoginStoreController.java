@@ -62,6 +62,11 @@ public class LoginStoreController implements Controller
                 MessageBox.showWarningByWrongInput(input, output);
                 continue;
             }
+            catch (NumberFormatException e)
+            {
+                MessageBox.showWarningByWrongNumber(input, output);
+                continue;
+            }
 
             // 스토어 ID와 패스워드를 모두 올바르게 입력했을 경우에만 실행됨
             view.showLoginSuccess();

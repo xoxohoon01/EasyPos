@@ -83,9 +83,9 @@ public class TradeLogView implements View
                 String cause = work.getCause();
                 Timestamp logTime = work.getLog_date();
 
-                if ("Enter".equalsIgnoreCase(cause)) {
+                if ("Leave".equalsIgnoreCase(cause)) {
                     enterTime = logTime; // 출근 시각 저장
-                } else if ("Leave".equalsIgnoreCase(cause) && enterTime != null) {
+                } else if ("Enter".equalsIgnoreCase(cause) && enterTime != null) {
                     long diffMillis = logTime.getTime() - enterTime.getTime();
                     int minutes = (int) (diffMillis / (1000 * 60)); // 분 단위 계산
                     totalMinutes += minutes;

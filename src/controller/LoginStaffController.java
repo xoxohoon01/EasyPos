@@ -60,7 +60,11 @@ public class LoginStaffController implements Controller
             catch (NullPointerException e)
             {
                 MessageBox.showWarningByWrongInput(input, output);
-                MessageBox.showEnterToContinue(input, output);
+                continue;
+            }
+            catch (NumberFormatException e)
+            {
+                MessageBox.showWarningByWrongNumber(input, output);
                 continue;
             }
 

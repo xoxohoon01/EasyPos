@@ -200,7 +200,7 @@ public class PaymentController implements Controller
                     for (int i = 0; i < targetStockList.size(); i++)
                     {
                         price += productRepository.getProductByID(targetStockList.get(i).getProduct_id()).getPrice() * targetStockList.get(i).getQuantity();
-                        if (productRepository.getProductByID(targetStockList.get(i).getProduct_id()).getIsAdult() == "Y")
+                        if (productRepository.getProductByID(targetStockList.get(i).getProduct_id()).getIsAdult().equals("Y"))
                         {
                             hasAdult = true;
                         }
@@ -209,6 +209,7 @@ public class PaymentController implements Controller
                     if (hasAdult)
                     {
                         view.promptAdult();
+                        MessageBox.showEnterToContinue(input, output);
                     }
 
                     view.promptPayment(price);
