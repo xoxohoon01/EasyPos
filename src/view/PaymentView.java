@@ -53,7 +53,14 @@ public class PaymentView implements View
     public void showStockList(Stock targetStock)
     {
         ProductRepository productRepository = new ProductRepository();
-        output.printf("%d) %s (%d개) (%s)\n", targetStock.getStock_id(), productRepository.getProductByID(targetStock.getProduct_id()).getName(), targetStock.getQuantity(), targetStock.getExpiration_date());
+        if (targetStock.getExpiration_date() != null)
+        {
+            output.printf("%d) %s (%d개) (%s)\n", targetStock.getStock_id(), productRepository.getProductByID(targetStock.getProduct_id()).getName(), targetStock.getQuantity(), targetStock.getExpiration_date());
+        }
+        else
+        {
+            output.printf("%d) %s (%d개)\n", targetStock.getStock_id(), productRepository.getProductByID(targetStock.getProduct_id()).getName(), targetStock.getQuantity());
+        }
     }
 
     public void promptInputProduct()
@@ -118,5 +125,12 @@ public class PaymentView implements View
         output.println("===========================");
         output.println("결제 상품 중에 성인물품이 포함되어 있습니다.");
         output.println("성인인증을 진행하십시오.");
+    }
+
+    public void promptExpiration()
+    {
+        output.println("===========================");
+        output.println("결제 상품 중에 유통기한이 지난 물품이 포함되어 있습니다.");
+        output.println("유통기한을 확인하십시오.");
     }
 }
