@@ -195,10 +195,20 @@ public class PaymentController implements Controller
                     // 2. targetStockList에서 제거
                     break;
                 case "4": // 결제
+                    boolean hasAdult = false;
                     int price = 0, extraCash = 0, customerCash = 0;
                     for (int i = 0; i < targetStockList.size(); i++)
                     {
                         price += productRepository.getProductByID(targetStockList.get(i).getProduct_id()).getPrice() * targetStockList.get(i).getQuantity();
+                        if (productRepository.getProductByID(targetStockList.get(i).getProduct_id()).getIsAdult() == "Y")
+                        {
+                            hasAdult = true;
+                        }
+                    }
+
+                    if (hasAdult)
+                    {
+                        view.promptAdult();
                     }
 
                     view.promptPayment(price);

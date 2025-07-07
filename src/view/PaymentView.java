@@ -112,4 +112,11 @@ public class PaymentView implements View
         output.println("카드의 잔액이 부족합니다.");
         output.printf("결제 금액: %d\n", price);
     }
+
+    public void promptAdult()
+    {
+        output.println("===========================");
+        output.println("결제 상품 중에 성인물품이 포함되어 있습니다.");
+        output.println("성인인증을 진행하십시오.");
+    }
 }
