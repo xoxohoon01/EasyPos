@@ -1,7 +1,10 @@
 package view;
 
 import io.OutputRenderer;
+import model.Work;
+import model.WorkRepository;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -40,9 +43,12 @@ public class MainMenuView implements View
         output.print("메뉴를 선택하세요: ");
     }
 
-    public void showLeave()
+    public void showLeave(Work lastEnter)
     {
         output.printf("현재 시간: %s\n", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        long diffMillis = Timestamp.valueOf(LocalDateTime.now()).getTime() - lastEnter.getLog_date().getTime();
+        int minutes = (int)(diffMillis / (1000 * 60));
+        output.printf("예상 급여: %d\n", minutes * 11000);
         output.println("종료하시겠습니까? (Y, N)");
         output.print("입력: ");
     }

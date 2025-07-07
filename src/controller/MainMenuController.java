@@ -4,6 +4,8 @@ import app.MessageBox;
 import io.InputProvider;
 import io.OutputRenderer;
 import model.StaffRepository;
+import model.Work;
+import model.WorkRepository;
 import view.MainMenuView;
 
 public class MainMenuController implements Controller
@@ -22,6 +24,7 @@ public class MainMenuController implements Controller
     @Override
     public void run()
     {
+        WorkRepository workRepository = new WorkRepository();
         while (true)
         {
             view.displayBanner();
@@ -54,7 +57,7 @@ public class MainMenuController implements Controller
                     break;
                 case "6":
                     // 로그아웃
-                    view.showLeave();
+                    view.showLeave(workRepository.getWorkList().getLast());
                     String answer = input.readLine();
                     if (answer.equals("Y"))
                     {

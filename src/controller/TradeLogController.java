@@ -72,6 +72,9 @@ public class TradeLogController implements Controller
                     MessageBox.showEnterToContinue(input, output);
                 }
                 break;
+            case "3": // 직원 정보 확인
+                view.promptStaffInfo();
+                break;
         }
     }
 
