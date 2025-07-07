@@ -16,7 +16,7 @@ public class Main
 {
     public static Store store;
     public static Staff staff;
-    public static int cash = 1234000;
+    public static int cash;
 
     public static Thread deliveryThread = new Thread();
 
@@ -42,6 +42,12 @@ public class Main
         Controller controller = new LoginStoreController(input, output);
         controller.run();
     }
+
+    public static void initCash()
+    {
+        cash = 1234000;
+    }
+
 }
 
 

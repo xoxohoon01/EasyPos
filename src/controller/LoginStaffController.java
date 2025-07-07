@@ -69,6 +69,7 @@ public class LoginStaffController implements Controller
             }
 
             // 스태프 ID와 패스워드를 모두 올바르게 입력했을 경우에만 실행됨
+            Main.initCash();
             view.showLoginSuccess();
             MessageBox.showEnterToContinue(input, output);
             Controller controller = new MainMenuController(input, output);
