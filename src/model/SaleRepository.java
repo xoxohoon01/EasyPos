@@ -25,7 +25,7 @@ public class SaleRepository
                 int product_id = rs.getInt("product_id");
                 int quantity = rs.getInt("quantity");
                 Timestamp sale_date = rs.getTimestamp("sale_date");
-                Sale newSale = new Sale(sale_id, product_id, quantity, sale_date);
+                Sale newSale = new Sale(sale_id, Main.store.getStore_id(), product_id, quantity, sale_date);
                 saleList.add(newSale);
             }
 
@@ -56,7 +56,7 @@ public class SaleRepository
                 int product_id = rs.getInt("product_id");
                 int quantity = rs.getInt("quantity");
                 Timestamp sale_date = rs.getTimestamp("sale_date");
-                Sale newSale = new Sale(sale_id, product_id, quantity, sale_date);
+                Sale newSale = new Sale(sale_id, Main.store.getStore_id(), product_id, quantity, sale_date);
                 saleList.add(newSale);
             }
 
@@ -68,5 +68,27 @@ public class SaleRepository
         }
 
         return null;
+    }
+
+    public void recordSale(int product_id, int quantity, int payAmount)
+    {
+        String sqlInsertSale = """
+            INSERT INTO sales (store_id, product_id, quantity, sale_date)
+            VALUES (?, ?, ?, SYSTIMESTAMP)
+            """;
+
+        try
+        {
+            Connection connection = DBConnection.getConnection();
+            PreparedStatement psInsert = connection.prepareStatement(sqlInsertSale);
+            psInsert.setInt(1, Main.store.getStore_id());
+            psInsert.setInt(2, product_id);
+            psInsert.setInt(3, quantity);
+            psInsert.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 }

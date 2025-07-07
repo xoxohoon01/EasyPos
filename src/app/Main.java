@@ -16,6 +16,7 @@ public class Main
 {
     public static Store store;
     public static Staff staff;
+    public static int cash = 1234000;
 
     public static Thread deliveryThread = new Thread();
 

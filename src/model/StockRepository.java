@@ -14,6 +14,7 @@ public class StockRepository
     {
         String sql = """
                 SELECT * FROM stocks WHERE store_id = ?
+                ORDER BY product_id ASC
                 """;
         try
         {
@@ -43,7 +44,7 @@ public class StockRepository
         return null;
     }
 
-    public Stock getStock(int targetProduct_id)
+    public Stock getStockByProductId(int targetProduct_id)
     {
         String sql = """
                 SELECT * FROM stocks WHERE store_id = ? AND product_id = ?
@@ -55,6 +56,38 @@ public class StockRepository
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, Main.store.getStore_id());
             preparedStatement.setInt(2, targetProduct_id);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next())
+            {
+                int stock_id = rs.getInt(1);
+                int store_id = rs.getInt(2);
+                int product_id = rs.getInt(3);
+                int quantity = rs.getInt(4);
+                Timestamp registered_date = rs.getTimestamp(5);
+                Timestamp expiration_date = rs.getTimestamp(6);
+                Stock targetStock = new Stock(stock_id, store_id, product_id, quantity, registered_date, expiration_date);
+                return targetStock;
+            }
+        }
+        catch (SQLException e)
+        {
+
+        }
+        return null;
+    }
+
+    public Stock getStockByStockId(int targetStock_id)
+    {
+        String sql = """
+                SELECT * FROM stocks WHERE store_id = ? AND stock_id = ?
+                """;
+
+        try
+        {
+            Connection connection = DBConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, Main.store.getStore_id());
+            preparedStatement.setInt(2, targetStock_id);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next())
             {
@@ -154,6 +187,34 @@ public class StockRepository
         catch (SQLException e)
         {
             e.printStackTrace();
+        }
+    }
+
+    public boolean decreaseStock(int stock_id, int quantity)
+    {
+
+        String sqlUpdateStock = """
+            UPDATE stocks
+            SET quantity = quantity - ?
+            WHERE store_id = ? AND stock_id = ? AND quantity >= ?
+            """;
+
+        try
+        {
+            Connection connection = DBConnection.getConnection();
+
+            PreparedStatement psUpdate = connection.prepareStatement(sqlUpdateStock);
+            psUpdate.setInt(1, quantity);
+            psUpdate.setInt(2, Main.store.getStore_id());
+            psUpdate.setInt(3, stock_id);
+            psUpdate.setInt(4, quantity);
+
+            int updatedRows = psUpdate.executeUpdate();
+            return updatedRows > 0;
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
         }
     }
 }

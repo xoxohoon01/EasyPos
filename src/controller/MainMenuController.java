@@ -74,13 +74,9 @@ public class MainMenuController implements Controller
                     }
             }
 
-            try
+            if (controller != null)
             {
                 controller.run(); // 선택한 새로운 컨트롤러 실행
-            }
-            catch (NullPointerException e)
-            {
-                MessageBox.showWarningByWrongInput(input, output);
             }
         }
     }
