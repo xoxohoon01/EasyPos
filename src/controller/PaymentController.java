@@ -7,6 +7,7 @@ import io.OutputRenderer;
 import model.*;
 import view.PaymentView;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -49,6 +50,9 @@ public class PaymentController implements Controller
             view.displayLast();
 
             Controller controller = null;
+            int targetStock_id = -1;
+            Stock targetStock = null;
+            int targetQuantity = 0;
 
             String choice = input.readLine();
             switch (choice)
@@ -64,12 +68,55 @@ public class PaymentController implements Controller
                             view.showStockList(stockList.get(i));
                         }
                         view.promptInputProduct();
-                        int targetStock_id = Integer.parseInt(input.readLine());
+                        try // 숫자 아닐 경우 캐치
+                        {
+                            targetStock_id = Integer.parseInt(input.readLine());
+                            if (targetStock_id == 0)
+                            {
+                                MessageBox.showWarningByWrongInput(input, output);
+                                break;
+                            }
+                            else
+                            {
+                                boolean isStocked = false;
+                                for (Stock stock : stockList)
+                                {
+                                    if (stock.getStock_id() == targetStock_id)
+                                        isStocked = true;
+                                }
+                                if (!isStocked)
+                                {
+                                    MessageBox.showWarningByWrongInput(input, output);
+                                    break;
+                                }
+                            }
+                        }
+                        catch (NumberFormatException e)
+                        {
+                            MessageBox.showWarningByWrongNumber(input, output);
+                            break;
+                        }
 
-                        Stock targetStock = stockRepository.getStockByStockId(targetStock_id); // null값 캐치
+                        try  // null값 캐치
+                        {
+                            targetStock = stockRepository.getStockByStockId(targetStock_id);
+                        }
+                        catch (NullPointerException e)
+                        {
+                            MessageBox.showWarningByWrongInput(input, output);
+                            break;
+                        }
 
-                        view.promptInputProductQuantity();
-                        int targetQuantity = Integer.parseInt(input.readLine());
+                        try  // 숫자 아닐 경우 캐치
+                        {
+                            view.promptInputProductQuantity();
+                            targetQuantity = Integer.parseInt(input.readLine());
+                        }
+                        catch (NumberFormatException e)
+                        {
+                            MessageBox.showWarningByWrongNumber(input, output);
+                            break;
+                        }
 
                         // 수량 제한
                         boolean isEnough = true;
@@ -143,7 +190,7 @@ public class PaymentController implements Controller
                         view.promptInputTargetStockToChangeQuantity();
                         int targetStockId = Integer.parseInt(input.readLine());
                         view.promptInputProductQuantity();
-                        int targetQuantity = Integer.parseInt(input.readLine());
+                        targetQuantity = Integer.parseInt(input.readLine());
 
                         boolean isChanged = false;
                         for (int i = 0; i < targetStockList.size(); i++)
@@ -196,19 +243,34 @@ public class PaymentController implements Controller
                     break;
                 case "4": // 결제
                     boolean hasAdult = false;
+                    boolean hasExpired = false;
                     int price = 0, extraCash = 0, customerCash = 0;
-                    for (int i = 0; i < targetStockList.size(); i++)
+                    if (!targetStockList.isEmpty())
                     {
-                        price += productRepository.getProductByID(targetStockList.get(i).getProduct_id()).getPrice() * targetStockList.get(i).getQuantity();
-                        if (productRepository.getProductByID(targetStockList.get(i).getProduct_id()).getIsAdult().equals("Y"))
+                        for (int i = 0; i < targetStockList.size(); i++)
                         {
-                            hasAdult = true;
+                            price += productRepository.getProductByID(targetStockList.get(i).getProduct_id()).getPrice() * targetStockList.get(i).getQuantity();
+                            if (productRepository.getProductByID(targetStockList.get(i).getProduct_id()).getIsAdult().equals("Y"))
+                            {
+                                hasAdult = true;
+                            }
+                            if (targetStockList.get(i).getExpiration_date() != null && targetStockList.get(i).getExpiration_date().before(new Timestamp(System.currentTimeMillis())))
+                            {
+                                hasExpired = true;
+                            }
                         }
                     }
+
 
                     if (hasAdult)
                     {
                         view.promptAdult();
+                        MessageBox.showEnterToContinue(input, output);
+                    }
+
+                    if (hasExpired)
+                    {
+                        view.promptExpiration();
                         MessageBox.showEnterToContinue(input, output);
                     }
 
@@ -240,7 +302,7 @@ public class PaymentController implements Controller
                                 targetStockList.clear();
                                 int change = customerCash - price;
 
-                                Main.cash += price - change;
+                                Main.cash += customerCash - change;
                                 view.promptPaymentDone(customerCash, price);
                                 MessageBox.showEnterToContinue(input, output);
                                 break;
@@ -273,7 +335,7 @@ public class PaymentController implements Controller
                                     targetStockList.clear();
                                     change = customerCash - price;
 
-                                    Main.cash += price - change;
+                                    Main.cash += price;
                                     view.promptPaymentDone(customerCash, price);
                                     MessageBox.showEnterToContinue(input, output);
                                 }
