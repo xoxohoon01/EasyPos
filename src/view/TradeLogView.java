@@ -71,38 +71,65 @@ public class TradeLogView implements View
         output.println("---------------------------");
     }
 
-    public void promptStaffInfo() {
+    public void promptStaffInfo()
+    {
         int totalMinutes = 0;
         WorkRepository workRepository = new WorkRepository();
         List<Work> workList = workRepository.getWorkList();
 
         Timestamp enterTime = null;
+        Timestamp leaveTime = null;
 
-        if (!workList.isEmpty()) {
-            for (Work work : workList) {
+        if (!workList.isEmpty())
+        {
+            for (Work work : workList)
+            {
                 String cause = work.getCause();
                 Timestamp logTime = work.getLog_date();
 
-                if ("Leave".equalsIgnoreCase(cause)) {
-                    enterTime = logTime; // 출근 시각 저장
-                } else if ("Enter".equalsIgnoreCase(cause) && enterTime != null) {
-                    long diffMillis = logTime.getTime() - enterTime.getTime();
-                    int minutes = (int) (diffMillis / (1000 * 60)); // 분 단위 계산
-                    totalMinutes += minutes;
+                if (cause.equalsIgnoreCase("Leave"))
+                {
+                    leaveTime = logTime;  // Leave 시각 저장
+                    if (enterTime != null)
+                    {
+                        // Enter와 Leave 짝을 맞춘 후
+                        long diffMillis = leaveTime.getTime() - enterTime.getTime();
+                        int minutes = (int) (diffMillis / (1000 * 60)); // 분 단위 계산
+                        totalMinutes += minutes;
 
-                    System.out.printf("[근무] %s → %s, 근무시간: %d분%n",
-                            enterTime, logTime, minutes);
-
-                    enterTime = null; // 짝지은 후 초기화
+                        double hours = totalMinutes / 60.0;
+                        int hourlyWage = 11000; // 시급 11,000원
+                        int salary = (int) ((minutes / 60.0) * hourlyWage);
+                        System.out.printf("[근무] %s → %s, 근무시간: %d분, 예상 급여:%d\n", enterTime, leaveTime, minutes, salary);
+                        enterTime = null; // 짝을 맞춘 후 초기화
+                        leaveTime = null; // Leave 초기화
+                    }
                 }
+                else if (cause.equalsIgnoreCase("Enter"))
+                {
+                    enterTime = logTime;  // Enter 시각 저장
+                }
+            }
+
+            // 마지막에 아직 Leave가 없을 때 처리 (근무 시간이 끝난 것으로 간주)
+            if (enterTime != null)
+            {
+                // 마지막 Enter가 있을 경우, Leave가 없으면 현재 시간으로 종료 시간 계산
+                Timestamp now = new Timestamp(System.currentTimeMillis());
+                long diffMillis = now.getTime() - enterTime.getTime();
+                int minutes = (int) (diffMillis / (1000 * 60)); // 분 단위 계산
+                totalMinutes += minutes;
+
+                System.out.printf("[근무] %s → %s, 근무시간: %d분%n", enterTime, now, minutes);
             }
         }
 
         double hours = totalMinutes / 60.0;
-        int hourlyWage = 11000; // 예: 시급 10,000원
+        int hourlyWage = 11000; // 시급 11,000원
         int salary = (int) (hours * hourlyWage);
 
         System.out.printf("총 근무 시간: %.2f시간, 예상 급여: %,d원%n", hours, salary);
     }
+
 
 }

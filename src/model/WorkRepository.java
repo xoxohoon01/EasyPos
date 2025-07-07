@@ -17,6 +17,7 @@ public class WorkRepository
                     SELECT *
                     FROM works
                     WHERE store_id = ? AND staff_id = ?
+                    ORDER BY log_date ASC
                     """;
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, Main.store.getStore_id());

@@ -45,11 +45,16 @@ public class MainMenuView implements View
 
     public void showLeave(Work lastEnter)
     {
+        output.printf("마지막 로그인 시간: %s\n", lastEnter.getLog_date());
         output.printf("현재 시간: %s\n", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+
         long diffMillis = new Timestamp(System.currentTimeMillis()).getTime() - lastEnter.getLog_date().getTime();
         int minutes = (int) (diffMillis / (1000 * 60));
-        System.out.printf("%s - %s = %d, %d분\n", new Timestamp(System.currentTimeMillis()).getTime(), lastEnter.getLog_date().getTime(), diffMillis, minutes);
-        output.printf("예상 급여: %d\n", (minutes/60) * 11000);
+        double hours = minutes / 60.0;
+        int hourlyWage = 11000; // 예: 시급 10,000원
+        int salary = (int) (hours * hourlyWage);
+
+        output.printf("예상 급여: %d\n", salary);
         output.println("종료하시겠습니까? (Y, N)");
         output.print("입력: ");
     }
