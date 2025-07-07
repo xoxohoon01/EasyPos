@@ -1,8 +1,16 @@
 package controller;
 
+import app.Main;
 import io.InputProvider;
 import io.OutputRenderer;
+import model.Product;
+import model.ProductRepository;
+import model.Stock;
+import model.StockRepository;
 import view.RegisterStockView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegisterStockController implements Controller
 {
@@ -20,9 +28,44 @@ public class RegisterStockController implements Controller
     @Override
     public void run()
     {
-        view.displayBanner();
-        view.displayMenu();
-        view.displayLast();
+        while (true)
+        {
+            view.displayBanner();
+            view.displayMenu();
+            view.displayLast();
+
+            StockRepository stockRepository = new StockRepository();
+            Controller controller = null;
+
+            String choice = input.readLine();
+            int targetProduct_id, targetQuantity, targetDelivery_id;
+            switch (choice)
+            {
+                case "1":
+                    view.promptInputProduct();
+                    targetProduct_id = Integer.parseInt(input.readLine());
+                    view.promptInputProductAmount();
+                    targetQuantity = Integer.parseInt(input.readLine());
+
+                    stockRepository.registerStockByProductId(targetProduct_id, targetQuantity);
+                    break;
+                case "2":
+                    view.promptInputDelivery();
+                    targetDelivery_id = Integer.parseInt(input.readLine());
+
+                    stockRepository.registerStockByDeliveryId(targetDelivery_id);
+                    break;
+                case "3":
+                    controller = new MainMenuController(input, output);
+                    break;
+            }
+
+            if (controller != null)
+            {
+                controller.run();
+                break;
+            }
+        }
     }
 
 

@@ -25,9 +25,9 @@ public class RegisterStockView implements View
     @Override
     public void displayMenu()
     {
-        output.println("1. 상품 입력");
-        output.println("2. 입력 결정");
-        output.println("3. 취소");
+        output.println("1. 상품 ID로 등록");
+        output.println("2. 입고 ID로 등록");
+        output.println("3. 뒤로가기");
     }
 
     @Override
@@ -46,6 +46,12 @@ public class RegisterStockView implements View
     public void promptInputProduct()
     {
         output.println("상품 ID를 입력하세요.");
+        output.print("ID: ");
+    }
+
+    public void promptInputDelivery()
+    {
+        output.println("입고 ID를 입력하세요.");
         output.print("ID: ");
     }
 
