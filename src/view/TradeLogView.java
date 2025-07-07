@@ -65,6 +65,7 @@ public class TradeLogView implements View
         output.printf("상품명: %s\n", targetProduct.getName());
         output.printf("갯수: %d개\n", targetSale.getQuantity());
         output.printf("매출액: %d원\n", targetProduct.getPrice() * targetSale.getQuantity());
+        output.printf("거래 날짜: %s\n", targetSale.getSale_date());
         output.println("---------------------------");
     }
 }

@@ -10,7 +10,12 @@ public class SaleRepository
 {
     public List<Sale> getTodaySaleList()
     {
-        String sql = "SELECT * FROM sales WHERE store_id = ? AND TRUNC(sale_date) = TRUNC(SYSDATE)";
+        String sql = """
+                SELECT * 
+                FROM sales 
+                WHERE store_id = ? AND TRUNC(sale_date) = TRUNC(SYSDATE)
+                ORDER BY sale_id ASC
+                """;
         List<Sale> saleList = new ArrayList<Sale>();
         try
         {
@@ -41,7 +46,12 @@ public class SaleRepository
 
     public List<Sale> getSaleList()
     {
-        String sql = "SELECT * FROM sales WHERE store_id = ?";
+        String sql = """
+                SELECT *
+                FROM sales
+                WHERE store_id = ?
+                ORDER BY sale_id ASC
+                """;
         List<Sale> saleList = new ArrayList<Sale>();
         try
         {
