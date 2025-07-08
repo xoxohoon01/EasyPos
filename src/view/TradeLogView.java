@@ -30,8 +30,9 @@ public class TradeLogView implements View
     {
         output.println("1. 오늘 매출 확인");
         output.println("2. 전체 매출 확인");
-        output.println("3. 예상 급여 확인");
-        output.println("4. 뒤로가기");
+        output.println("3. 날짜별 매출 확인");
+        output.println("4. 예상 급여 확인");
+        output.println("5. 뒤로가기");
     }
 
     @Override
