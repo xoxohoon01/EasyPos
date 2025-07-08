@@ -22,6 +22,8 @@ public class Main
 
     public static void main(String[] args)
     {
+        // 발주 신청 이후, 입고 예정 품목들은 랜덤한 시간이 지나면 입고 품목으로 넘어가며
+        // 이를 쓰레드로 구현
         DeliveryRepository deliveryRepository = new DeliveryRepository();
         new Thread(() -> {
             while (true) {
@@ -36,9 +38,11 @@ public class Main
             }
         }).start();
 
+        // I/O 시스템 추상화
         InputProvider input = new ConsoleInputProvider();
         OutputRenderer output = new ConsoleOutputRenderer();
 
+        // 컨트롤러 초기화
         Controller controller = new LoginStoreController(input, output);
         controller.run();
     }
