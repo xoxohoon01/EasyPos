@@ -57,7 +57,7 @@ public class MainMenuController implements Controller
                     break;
                 case "6":
                     // 로그아웃
-                    view.showLeave(workRepository.getWorkList().getLast());
+                    view.showLeave(workRepository.getWorkList().get(workRepository.getWorkList().size()-1));
                     String answer = input.readLine();
                     if (answer.equals("Y"))
                     {

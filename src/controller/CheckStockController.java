@@ -1,5 +1,6 @@
 package controller;
 
+import app.Main;
 import app.MessageBox;
 import io.InputProvider;
 import io.OutputRenderer;
@@ -44,7 +45,7 @@ public class CheckStockController implements Controller
             {
                 case "1":
                     view.promptShowStockList();
-                    stockList = stockRepository.getStockList();
+                    stockList = stockRepository.getStockList(Main.store.getStore_id());
                     List<Stock> amountList = new ArrayList<Stock>();
                     if (!stockList.isEmpty()) // 재고 DB에 있는 데이터들 중 product_id가 같은 것들 합치기
                     {
@@ -86,7 +87,7 @@ public class CheckStockController implements Controller
                     break;
                 case "2":
                     view.promptInputProductID();
-                    stockList = stockRepository.getStockList();
+                    stockList = stockRepository.getStockList(Main.store.getStore_id());
                     try
                     {
                         int targetID = Integer.parseInt(input.readLine());

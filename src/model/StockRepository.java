@@ -10,7 +10,7 @@ import java.util.List;
 
 public class StockRepository
 {
-    public List<Stock> getStockList()
+    public List<Stock> getStockList(int targetStore_id)
     {
         String sql = """
                 SELECT * FROM stocks WHERE store_id = ?
@@ -20,7 +20,7 @@ public class StockRepository
         {
             Connection connection = DBConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, Main.store.getStore_id());
+            preparedStatement.setInt(1, targetStore_id);
             ResultSet rs = preparedStatement.executeQuery();
 
             List<Stock> stockList = new ArrayList<Stock>();

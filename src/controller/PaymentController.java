@@ -60,7 +60,7 @@ public class PaymentController implements Controller
                 case "1": // 상품 선택
                     // 1. StockList 보여주고, 번호 선택
                     // 2. 수량 선택해서 Stock 만들고 targetStockList에 추가
-                    List<Stock> stockList = stockRepository.getStockList();
+                    List<Stock> stockList = stockRepository.getStockList(Main.store.getStore_id());
                     if (!stockList.isEmpty()) // Try-catch문 null값 캐치, 숫자 아닐 경우 캐치
                     {
                         for (int i = 0; i < stockList.size(); i++)
