@@ -40,7 +40,7 @@ public class LoginStaffController implements Controller
                     view.promptStaffPassword();
                     String password = input.readLine();
 
-                    Main.staff = staffRepository.login(staffID, password);
+                    Main.staff = staffRepository.login(staffID, password, Main.store.getStore_id());
                     if (Main.staff == null) // PASSWORD가 틀렸을 경우
                     {
                         view.showLoginFailedByPassword();

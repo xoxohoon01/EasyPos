@@ -30,7 +30,7 @@ public class StaffRepository
         return false; // 로그인 실패
     }
 
-    public Staff login(int staff_id, String password)
+    public Staff login(int staff_id, String password, int store_id)
     {
         String sql = "SELECT staff_id, staff_name, password FROM staffs WHERE staff_id=? AND password=?";
         try
@@ -50,7 +50,7 @@ public class StaffRepository
                 {
                     PreparedStatement worksTable = conn.prepareStatement(sqlUpdateWorksTable);
 
-                    worksTable.setInt(1, Main.store.getStore_id());
+                    worksTable.setInt(1, store_id);
                     worksTable.setInt(2, rs.getInt("staff_id"));
                     worksTable.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
                     worksTable.setString(4, "Enter");
