@@ -30,6 +30,7 @@ public class OrderController implements Controller
     public void run()
     {
         ProductRepository productRepository = new ProductRepository();
+        OrderRepository orderRepository = new OrderRepository();
         List<Order> orderList = new ArrayList<Order>();
 
         while (true)
@@ -105,7 +106,7 @@ public class OrderController implements Controller
                         // 발주 예정품목이 아닌 경우
                         if (!isRegisteredOrder)
                         {
-                            Order newOrder = new Order(Main.store.getStore_id(), newProduct.getProduct_id(), amount);
+                            Order newOrder = new Order(orderRepository.getOrderList(Main.store.getStore_id()).size(), Main.store.getStore_id(), newProduct.getProduct_id(), amount);
                             orderList.add(newOrder);
                         }
                     }
@@ -135,7 +136,6 @@ public class OrderController implements Controller
                     switch (confirm)
                     {
                         case "Y":
-                            OrderRepository orderRepository = new OrderRepository();
                             orderRepository.registerOrder(orderList);
                             view.promptDone();
                             orderList.clear();
